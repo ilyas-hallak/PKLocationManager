@@ -29,13 +29,13 @@ import CoreLocation
             return (false, NSError(domain: "com.NSExceptional.PKLocationManager", code: 0, userInfo: [NSLocalizedDescriptionKey : "Location monitoring unavailable." ]))
         }
         
-        var presentMonitor = self.locationMonitorFor(monitoringObject)
+        let presentMonitor = self.locationMonitorFor(monitoringObject)
         
         if (presentMonitor != nil) {
             return (false, NSError(domain: "com.NSExceptional.PKLocationManager", code: 1, userInfo: [NSLocalizedDescriptionKey : "Object is already registered as a location monitor." ]))
         }
         
-        var monitor = LocationMonitor(monitoringObject: monitoringObject, queue: queue, desiredAccuracy: desiredAccuracy, handler: handler)
+        let monitor = LocationMonitor(monitoringObject: monitoringObject, queue: queue, desiredAccuracy: desiredAccuracy, handler: handler)
         
         monitors.append(monitor)
         sharedLocationManager.desiredAccuracy = accuracy
@@ -55,7 +55,7 @@ import CoreLocation
     
     /// OBJETIVE-C COMPATIBILITY METHOD - Adds an object to a list of objects interested in aquiring location updates. Note that the updates might be deferred.
     public func register(locationMonitor monitoringObject:AnyObject!, desiredAccuracy: CLLocationAccuracy, queue: dispatch_queue_t, errorPtr: NSErrorPointer, handler:(location: CLLocation) -> ()) -> Bool {
-        let (success, error) = register(locationMonitor: monitoringObject, desiredAccuracy: desiredAccuracy, queue: queue, handler: handler);
+        let (_, error) = register(locationMonitor: monitoringObject, desiredAccuracy: desiredAccuracy, queue: queue, handler: handler);
         
         if (errorPtr != nil) {
             errorPtr.memory = error
