@@ -155,7 +155,7 @@ import CoreLocation
     
     // #MARK: CLLocationManagerDelegate
     
-    public func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for location in locations as Array<CLLocation> {
             for monitor in monitors {
                 monitor.handler?(location)
@@ -163,8 +163,8 @@ import CoreLocation
         }
     }
     
-    public func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        var permissionGiven = status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse
+    public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        let permissionGiven = status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse
         if permissionGiven && monitors.count > 0 {
             sharedLocationManager.startUpdatingLocation()
         }
